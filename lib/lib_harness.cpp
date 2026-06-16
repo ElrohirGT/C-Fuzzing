@@ -9,7 +9,7 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size) {
   FuzzedDataProvider fuzzed_data(data, size);
 
   const size_t capacity = 100;
-  uint8_t *inner = (uint8_t *)malloc(capacity);
+  uint8_t inner[capacity];
   QTZ_ByteArray buff = {0};
   QTZ_ByteArray_Init(&buff, inner, capacity);
 
@@ -19,6 +19,5 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size) {
   }
 
   QTZ_ByteArray_Reset(&buff);
-  free(inner);
   return 0;
 }
