@@ -21,6 +21,7 @@
       default = pkgs.mkShell {
         packages = [
           pkgs.clang
+          pkgs.lldb
           pkgs.xc
         ];
       };
