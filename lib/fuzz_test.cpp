@@ -1,5 +1,5 @@
-#include "include/common.h"
-#include "include/strings.h"
+#include "common.c"
+#include "strings.c"
 #include <cstdlib>
 
 void QTZ_TEST_FmtSizeT(size_t n, QTZ_ByteArray *buff) {

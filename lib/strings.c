@@ -14,7 +14,7 @@ size_t QTZ_DigitQuantity(size_t n) {
 
 QTZ_FMTSIZET_Result QTZ_FmtSizeT(size_t n, QTZ_ByteArray *buffer) {
   if (n == 0) {
-    if (buffer->capacity <= 0) {
+    if (QTZ_ByteArray_CantHoldLength(buffer, 1)) {
       return QTZ_FMTSIZET_BUFFER_NOT_LARGE_ENOUGH;
     }
 
@@ -24,14 +24,13 @@ QTZ_FMTSIZET_Result QTZ_FmtSizeT(size_t n, QTZ_ByteArray *buffer) {
 
     return QTZ_FMTSIZET_OK;
   } else {
-    size_t buffer_length = QTZ_DigitQuantity(n);
-    size_t remaining_space = buffer->capacity - buffer->length;
-    if (remaining_space < buffer_length) {
+    size_t digit_quantity = QTZ_DigitQuantity(n);
+    if (QTZ_ByteArray_CantHoldLength(buffer, digit_quantity)) {
       return QTZ_FMTSIZET_BUFFER_NOT_LARGE_ENOUGH;
     }
 
-    for (size_t i = 0; i < buffer_length; i++) {
-      size_t zeros = buffer_length - i - 1;
+    for (size_t i = 0; i < digit_quantity; i++) {
+      size_t zeros = digit_quantity - i - 1;
       uint8_t character = '?';
       if (zeros > 0) {
         size_t divider = pow(10, zeros);
