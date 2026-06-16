@@ -1,22 +1,24 @@
+#include "include/FuzzedDataProvider.h"
 #include "include/common.h"
-#include <cstdint>
-#include <cstdio>
+#include <cstddef>
 #include <cstdlib>
-#include <stddef.h>
-#include <strings.h>
 
 extern void QTZ_TEST_FmtSizeT(size_t n, QTZ_ByteArray *buff);
 
 extern "C" int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size) {
-  uint8_t inner[5];
+  FuzzedDataProvider fuzzed_data(data, size);
+
+  const size_t capacity = 100;
+  uint8_t *inner = (uint8_t *)malloc(capacity);
   QTZ_ByteArray buff = {0};
-  QTZ_ByteArray_Init(&buff, inner, size);
+  QTZ_ByteArray_Init(&buff, inner, capacity);
 
   if (size > 0) {
-    size_t n = (size_t)data[0];
+    size_t n = fuzzed_data.ConsumeIntegral<size_t>();
     QTZ_TEST_FmtSizeT(n, &buff);
   }
 
   QTZ_ByteArray_Reset(&buff);
+  free(inner);
   return 0;
 }
