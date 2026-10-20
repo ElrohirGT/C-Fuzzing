@@ -20,8 +20,7 @@
     in {
       default = pkgs.mkShell {
         packages = [
-          pkgs.clang
-          pkgs.lldb
+          pkgs.aflplusplus
           pkgs.xc
         ];
       };

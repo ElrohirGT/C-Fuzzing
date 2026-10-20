@@ -10,12 +10,3 @@ void check_buf(char *buf, size_t buf_len) {
     }
   }
 }
-
-#ifndef NO_MAIN
-int main() {
-  char target[] = "123";
-  size_t len = strlen(target);
-  check_buf(target, len);
-  return 0;
-}
-#endif // NO_MAIN
