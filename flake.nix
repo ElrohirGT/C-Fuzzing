@@ -21,6 +21,7 @@
       default = pkgs.mkShell {
         packages = [
           pkgs.aflplusplus
+          pkgs.llvm
           pkgs.xc
         ];
       };
